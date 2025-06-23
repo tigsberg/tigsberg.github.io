@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Gallery</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        /* Twinkling stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: var(--opacity); }
+        }
+
+        /* Solar system container */
+        .solar-system {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vmin;
+            height: 100vmin;
+        }
+
+        /* Central image */
+        .sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15vmin;
+            height: 15vmin;
+            border-radius: 50%;
+            background-image: url('images/step_0.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .sun:hover {
+            width: 40vmin;
+            height: 40vmin;
+            box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.5);
+            z-index: 100;
+        }
+
+        /* Planets */
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            transform-origin: center center;
+        }
+
+        .planet:hover {
+            transform: scale(5.5) !important;
+            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4);
+            z-index: 50;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="solar-system">
+        <div class="sun"></div>
+        <!-- Planets will be added by JavaScript -->
+    </div>
+
+    <script>
+        // Create twinkling stars
+        const starsContainer = document.getElementById('stars');
+        const starCount = 200;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Random position
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            
+            // Random size (1-3px)
+            const size = Math.random() * 2 + 1;
+            
+            // Random twinkle duration (2-5s)
+            const duration = Math.random() * 3 + 2;
+            
+            // Random opacity (0.3-0.9)
+            const opacity = Math.random() * 0.6 + 0.3;
+            
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${duration}s`);
+            star.style.setProperty('--opacity', opacity);
+            
+            starsContainer.appendChild(star);
+        }
+
+        // Create planets
+        const solarSystem = document.querySelector('.solar-system');
+        const planetCount = 6;
+        const planetImages = [
+      'images/step_1.jpg',
+      'images/step_2.jpg',
+      'images/step_3.jpg',
+      'images/step_4.jpg',
+      'images/step_5.jpg',
+      'images/step_6.jpg'
+        ];
+        
+        // Store all planet animation intervals
+        const planetIntervals = [];
+        
+        for (let i = 0; i < planetCount; i++) {
+            const planet = document.createElement('div');
+            planet.classList.add('planet');
+            
+            // Set planet image
+            planet.style.backgroundImage = `url('${planetImages[i]}')`;
+            
+            // Random size (3-6vmin)
+            const size = Math.random() * 3 + 3;
+            planet.style.width = `${size}vmin`;
+            planet.style.height = `${size}vmin`;
+            
+            // Orbit distance (20-45vmin from center)
+            const orbitRadius = Math.random() * 25 + 20;
+            
+            // Initial angle
+            const angle = (i * (360 / planetCount)) + (Math.random() * 30);
+            
+            // Set initial position
+            updatePlanetPosition(planet, angle, orbitRadius);
+            
+            solarSystem.appendChild(planet);
+            
+            // Animate orbit
+            let currentAngle = angle;
+            let intervalId = setInterval(() => {
+                currentAngle += 0.2;
+                updatePlanetPosition(planet, currentAngle, orbitRadius);
+            }, 20);
+            
+            // Store interval ID for this planet
+            planetIntervals.push({
+                planet: planet,
+                intervalId: intervalId,
+                currentAngle: currentAngle,
+                orbitRadius: orbitRadius,
+                isPaused: false
+            });
+            
+            // Add hover events
+            planet.addEventListener('mouseenter', () => {
+                // Find this planet in the intervals array
+                const planetData = planetIntervals.find(p => p.planet === planet);
+                if (planetData && !planetData.isPaused) {
+                    clearInterval(planetData.intervalId);
+                    planetData.isPaused = true;
+                }
+            });
+            
+            planet.addEventListener('mouseleave', () => {
+                // Find this planet in the intervals array
+                const planetData = planetIntervals.find(p => p.planet === planet);
+                if (planetData && planetData.isPaused) {
+                    planetData.intervalId = setInterval(() => {
+                        planetData.currentAngle += 0.2;
+                        updatePlanetPosition(planet, planetData.currentAngle, planetData.orbitRadius);
+                    }, 20);
+                    planetData.isPaused = false;
+                }
+            });
+        }
+        
+        function updatePlanetPosition(planet, angle, radius) {
+            const centerX = 50; // 50% of parent
+            const centerY = 50; // 50% of parent
+            const x = centerX + radius * Math.cos(angle * Math.PI / 180);
+            const y = centerY + radius * Math.sin(angle * Math.PI / 180);
+            
+            planet.style.left = `${x}%`;
+            planet.style.top = `${y}%`;
+            planet.style.transform = `translate(-50%, -50%)`;
+        }
+    </script>
+</body>
+</html>
