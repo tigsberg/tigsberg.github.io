@@ -83,11 +83,10 @@
             box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             cursor: pointer;
-            transform-origin: center center;
         }
 
         .planet:hover {
-            transform: scale(5.5) !important;
+            transform: scale(5) !important;
             box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.4);
             z-index: 50;
         }
@@ -145,9 +144,6 @@
       'images/step_6.jpg'
         ];
         
-        // Store all planet animation intervals
-        const planetIntervals = [];
-        
         for (let i = 0; i < planetCount; i++) {
             const planet = document.createElement('div');
             planet.classList.add('planet');
@@ -166,6 +162,12 @@
             // Initial angle
             const angle = (i * (360 / planetCount)) + (Math.random() * 30);
             
+            // Animation
+            const orbitDuration = Math.random() * 40 + 80; // 80-120 seconds
+            planet.style.animation = `orbit ${orbitDuration}s linear infinite`;
+            planet.style.setProperty('--orbit-radius', `${orbitRadius}vmin`);
+            planet.style.setProperty('--initial-angle', `${angle}deg`);
+            
             // Set initial position
             updatePlanetPosition(planet, angle, orbitRadius);
             
@@ -173,41 +175,10 @@
             
             // Animate orbit
             let currentAngle = angle;
-            let intervalId = setInterval(() => {
+            setInterval(() => {
                 currentAngle += 0.2;
                 updatePlanetPosition(planet, currentAngle, orbitRadius);
             }, 20);
-            
-            // Store interval ID for this planet
-            planetIntervals.push({
-                planet: planet,
-                intervalId: intervalId,
-                currentAngle: currentAngle,
-                orbitRadius: orbitRadius,
-                isPaused: false
-            });
-            
-            // Add hover events
-            planet.addEventListener('mouseenter', () => {
-                // Find this planet in the intervals array
-                const planetData = planetIntervals.find(p => p.planet === planet);
-                if (planetData && !planetData.isPaused) {
-                    clearInterval(planetData.intervalId);
-                    planetData.isPaused = true;
-                }
-            });
-            
-            planet.addEventListener('mouseleave', () => {
-                // Find this planet in the intervals array
-                const planetData = planetIntervals.find(p => p.planet === planet);
-                if (planetData && planetData.isPaused) {
-                    planetData.intervalId = setInterval(() => {
-                        planetData.currentAngle += 0.2;
-                        updatePlanetPosition(planet, planetData.currentAngle, planetData.orbitRadius);
-                    }, 20);
-                    planetData.isPaused = false;
-                }
-            });
         }
         
         function updatePlanetPosition(planet, angle, radius) {
@@ -218,7 +189,7 @@
             
             planet.style.left = `${x}%`;
             planet.style.top = `${y}%`;
-            planet.style.transform = `translate(-50%, -50%)`;
+            planet.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
         }
     </script>
 </body>
