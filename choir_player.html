@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choir Part Player</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #111827;
+      color: #e5e7eb;
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    p {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .card {
+      max-width: 520px;
+      margin: 0 auto;
+      background: #1f2937;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    label {
+      font-size: 0.85rem;
+      color: #d1d5db;
+    }
+    select {
+      width: 100%;
+      padding: 6px 8px;
+      margin-top: 4px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #111827;
+      color: #e5e7eb;
+    }
+    .section {
+      margin-top: 12px;
+    }
+    .track {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 8px;
+      background: #111827;
+    }
+    .track-label {
+      width: 80px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .file-name {
+      flex: 1;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .mute-btn {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: #4b5563;
+      color: #e5e7eb;
+      white-space: nowrap;
+    }
+    .mute-btn.muted {
+      background: #b91c1c;
+    }
+    #playPauseBtn {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: #22c55e;
+      color: #022c22;
+    }
+    #playPauseBtn.paused {
+      background: #22c55e;
+    }
+    #playPauseBtn.playing {
+      background: #f97316;
+      color: #111827;
+    }
+    #status {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      text-align: center;
+      min-height: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Choir Part Player</h1>
+    <p>
+      Choose a song, then press Play. Tap Mute/Unmute for each part.
+    </p>
+
+    <div class="section">
+      <label for="songSelect">Song:</label>
+      <select id="songSelect">
+        <!-- Options are filled by JS -->
+      </select>
+    </div>
+
+    <div class="section" id="tracks">
+      <!-- Part rows are created by JS -->
+    </div>
+
+    <button id="playPauseBtn" class="paused">Play</button>
+    <div id="status"></div>
+  </div>
+
+  <script>
+    // Define songs and file paths (relative to this HTML file)
+    // We assume this HTML lives in /Users/.../Christmas/
+    // and the audio files are in ./files/
+    const SONGS = [
+      {
+        id: "angels",
+        name: "Angels",
+        parts: {
+          Soprano: "files/Angels_sop.mp3",
+          Alto:    "files/Angels_alt.mp3",
+          Tenor:   "files/Angels_ten.mp3",
+          Bass:    "files/Angels_bass.mp3"
+        }
+      },
+      {
+        id: "deck",
+        name: "Deck the Halls",
+        parts: {
+          Soprano: "files/Deck_the_Halls_sop.mp3",
+          Alto:    "files/Deck_the_Halls_alt.mp3",
+          Tenor:   "files/Deck_the_Halls_ten.mp3",
+          Bass:    "files/Deck_the_Halls_bas.mp3"
+        }
+      },
+      {
+        id: "jingle",
+        name: "Jingle Bells",
+        parts: {
+          Soprano: "files/Jingle_bells_sop.mp3",
+          Alto:    "files/Jingle_bells_alt.mp3",
+          Tenor:   "files/Jingle_bells_ten.mp3",
+          Bass:    "files/Jingle_bells_bas.mp3"
+        }
+      },
+      {
+        id: "ocome",
+        name: "O Come All Ye Faithful",
+        parts: {
+          Soprano: "files/O_come_all_ye_faithful_sop.mp3",
+          Alto:    "files/O_come_all_ye_faithful_alt.mp3",
+          Tenor:   "files/O_come_all_ye_faithful_ten.mp3",
+          Bass:    "files/O_come_all_ye_faithful_bas.mp3"
+        }
+      },
+      {
+        id: "olittle",
+        name: "O Little Town of Bethlehem",
+        parts: {
+          Soprano: "files/O_Little_Town_of_Bethlehem_sop.mp3",
+          Alto:    "files/O_Little_Town_of_Bethlehem_alt.mp3",
+          Tenor:   "files/O_Little_Town_of_Bethlehem_ten.mp3",
+          Bass:    "files/O_Little_Town_of_Bethlehem_bas.mp3"
+        }
+      },
+      {
+        id: "silent",
+        name: "Silent Night",
+        parts: {
+          Soprano: "files/Silent_Night_sop.mp3",
+          Alto:    "files/Silent_Night_alt.mp3",
+          Tenor:   "files/Silent_Night_ten.mp3",
+          Bass:    "files/Silent_Night_bas.mp3"
+        }
+      },
+      {
+        id: "wewish",
+        name: "We Wish You a Merry Christmas",
+        parts: {
+          Soprano: "files/We_Wish_You_a_Merry_Christmas_sop.mp3",
+          Alto:    "files/We_Wish_You_a_Merry_Christmas_alt.mp3",
+          Tenor:   "files/We_Wish_You_a_Merry_Christmas_ten.mp3",
+          Bass:    "files/We_Wish_You_a_Merry_Christmas_bas.mp3"
+        }
+      }
+    ];
+
+    const PART_ORDER = ["Soprano", "Alto", "Tenor", "Bass"];
+
+    const songSelect   = document.getElementById("songSelect");
+    const tracksDiv    = document.getElementById("tracks");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const statusEl     = document.getElementById("status");
+
+    // Track objects for current song:
+    // { partName, filePath, audio, muted, row, muteBtn }
+    let currentTracks = [];
+    let isPlaying = false;
+    let currentSong = null;
+
+    function initSongDropdown() {
+      SONGS.forEach((song, idx) => {
+        const opt = document.createElement("option");
+        opt.value = song.id;
+        opt.textContent = song.name;
+        if (idx === 0) opt.selected = true;
+        songSelect.appendChild(opt);
+      });
+      currentSong = SONGS[0];
+      buildTracksForSong(currentSong);
+    }
+
+    function stopAllAudio() {
+      currentTracks.forEach(track => {
+        if (track.audio) {
+          track.audio.pause();
+          track.audio.currentTime = 0;
+        }
+      });
+      isPlaying = false;
+      playPauseBtn.textContent = "Play";
+      playPauseBtn.classList.remove("playing");
+      playPauseBtn.classList.add("paused");
+    }
+
+    function buildTracksForSong(song) {
+      // stop previous audio & clear UI
+      stopAllAudio();
+      currentTracks.forEach(track => {
+        if (track.audio) {
+          track.audio.src = "";
+          track.audio = null;
+        }
+      });
+      currentTracks = [];
+      tracksDiv.innerHTML = "";
+
+      PART_ORDER.forEach(partName => {
+        const filePath = song.parts[partName];
+        if (!filePath) return;  // skip missing parts
+
+        const row = document.createElement("div");
+        row.className = "track";
+
+        const label = document.createElement("div");
+        label.className = "track-label";
+        label.textContent = partName;
+
+        const fileNameEl = document.createElement("div");
+        fileNameEl.className = "file-name";
+        fileNameEl.textContent = filePath;
+
+        const muteBtn = document.createElement("button");
+        // START MUTED: button style + text
+        muteBtn.className = "mute-btn muted";
+        muteBtn.textContent = "Unmute";
+
+        const audio = new Audio(filePath);
+        audio.loop = true;
+        audio.preload = "auto";
+        // START MUTED: no sound
+        audio.volume = 0;
+
+        const track = {
+          partName,
+          filePath,
+          audio,
+          muted: true,  // START MUTED
+          row,
+          muteBtn
+        };
+        currentTracks.push(track);
+
+        muteBtn.addEventListener("click", () => {
+          if (!track.audio) return;
+          track.muted = !track.muted;
+          track.audio.volume = track.muted ? 0 : 1;
+          muteBtn.textContent = track.muted ? "Unmute" : "Mute";
+          muteBtn.classList.toggle("muted", track.muted);
+        });
+
+        row.appendChild(label);
+        row.appendChild(fileNameEl);
+        row.appendChild(muteBtn);
+        tracksDiv.appendChild(row);
+      });
+
+      statusEl.textContent = `Loaded: ${song.name}`;
+    }
+
+    songSelect.addEventListener("change", () => {
+      const songId = songSelect.value;
+      const song = SONGS.find(s => s.id === songId);
+      if (!song) return;
+      currentSong = song;
+      buildTracksForSong(song);
+    });
+
+    playPauseBtn.addEventListener("click", () => {
+      if (!currentSong || currentTracks.length === 0) {
+        statusEl.textContent = "No parts loaded for this song.";
+        return;
+      }
+
+      if (!isPlaying) {
+        currentTracks.forEach(track => {
+          try {
+            track.audio.currentTime = 0;
+            track.audio.play().catch(err => {
+              console.warn("Playback failed for", track.partName, err);
+            });
+          } catch (e) {
+            console.warn(e);
+          }
+        });
+        isPlaying = true;
+        playPauseBtn.textContent = "Pause";
+        playPauseBtn.classList.remove("paused");
+        playPauseBtn.classList.add("playing");
+        statusEl.textContent = `Playing: ${currentSong.name}`;
+      } else {
+        currentTracks.forEach(track => {
+          if (track.audio) track.audio.pause();
+        });
+        isPlaying = false;
+        playPauseBtn.textContent = "Play";
+        playPauseBtn.classList.remove("playing");
+        playPauseBtn.classList.add("paused");
+        statusEl.textContent = `Paused: ${currentSong.name}`;
+      }
+    });
+
+    window.addEventListener("beforeunload", () => {
+      currentTracks.forEach(track => {
+        if (track.audio) {
+          track.audio.pause();
+          track.audio.src = "";
+        }
+      });
+    });
+
+    // init
+    initSongDropdown();
+  </script>
+</body>
+</html>
