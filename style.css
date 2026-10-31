@@ -1,0 +1,519 @@
+/* ============================================================
+   Tigran Khachaturyants — personal site
+   One stylesheet, no build step. Edit directly.
+
+   The organising idea is the midplane: a horizontal line that
+   bends. Red sits above it, blue below, which is how height
+   above and below a galactic disc is drawn in the literature.
+   ============================================================ */
+
+:root {
+  /* Colour ------------------------------------------------- */
+  --paper:    #fcfcfd;   /* page ground, a cool paper white     */
+  --wash:     #f1f4f7;   /* faint panel tint                    */
+  --ink:      #0f1c2e;   /* deep navy, body text                */
+  --ink-soft: #566376;   /* secondary text                      */
+  --midplane: #b9c2cd;   /* rules and hairlines                 */
+  --up:       #bf3b2e;   /* above the midplane                  */
+  --down:     #2f5e9e;   /* below the midplane                  */
+
+  /* Type --------------------------------------------------- */
+  --display: "Instrument Serif", Georgia, serif;
+  --body:    "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+
+  /* Measure and rhythm ------------------------------------- */
+  --measure: 62ch;       /* comfortable line length             */
+  --gutter:  clamp(1.25rem, 5vw, 5rem);
+  --page:    78rem;      /* maximum content width               */
+}
+
+/* ------------------------------------------------------------
+   Reset, kept small on purpose
+   ------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 400; line-height: 1.12; }
+p  { margin: 0 0 1rem; }
+ol, ul { margin: 0; padding: 0; list-style: none; }
+img, svg, canvas { display: block; max-width: 100%; }
+
+a { color: inherit; }
+
+/* One focus style for the whole page */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--down);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: var(--gutter);
+  top: 0.75rem;
+  z-index: 10;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.5rem 0.9rem;
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------
+   Top bar
+   ------------------------------------------------------------ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 1rem var(--gutter);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--midplane);
+}
+
+.topbar__name {
+  font-family: var(--display);
+  font-size: 1.3rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.topbar__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.topbar__nav a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+.topbar__nav a:hover { color: var(--ink); border-bottom-color: var(--up); }
+
+/* ------------------------------------------------------------
+   Hero
+   ------------------------------------------------------------ */
+.hero {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3.25rem) var(--gutter) clamp(2rem, 5vw, 3.25rem);
+}
+
+.hero__figure { margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
+
+#warp {
+  width: 100%;
+  height: clamp(160px, 22vw, 250px);
+  cursor: grab;
+  /* Horizontal drags are ours; vertical ones still scroll the page. */
+  touch-action: pan-y;
+}
+
+#warp.is-dragging { cursor: grabbing; }
+
+#warp:focus-visible {
+  outline: 2px solid var(--down);
+  outline-offset: 4px;
+}
+
+.hero__caption {
+  margin: 0.6rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  max-width: var(--measure);
+}
+
+.hero__title {
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 7vw, 4.5rem);
+  letter-spacing: -0.015em;
+  margin-bottom: 1.25rem;
+}
+.hero__title em { font-style: italic; color: var(--up); }
+
+.hero__lede {
+  max-width: var(--measure);
+  font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+  color: var(--ink-soft);
+}
+
+.hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+.btn:hover { background: var(--down); }
+
+.btn--quiet {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--midplane);
+}
+.btn--quiet:hover { background: var(--wash); color: var(--ink); border-color: var(--ink-soft); }
+
+/* ------------------------------------------------------------
+   Warped divider. The page's recurring structural device:
+   a horizontal rule that does not stay on the midplane.
+   ------------------------------------------------------------ */
+.rule {
+  height: 26px;
+  margin: clamp(1.5rem, 4vw, 2.75rem) 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 26' preserveAspectRatio='none'%3E%3Cpath d='M0 19 C 220 19, 330 7, 600 13 C 870 19, 980 7, 1200 7' fill='none' stroke='%23b9c2cd' stroke-width='1.25'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------
+   Generic section
+   ------------------------------------------------------------ */
+/* Every anchor target clears the sticky top bar when jumped to */
+.hero,
+.about,
+.section { scroll-margin-top: 5rem; }
+
+.section {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem) var(--gutter) clamp(2.5rem, 6vw, 4rem);
+}
+
+.section__title {
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  margin-bottom: 1.25rem;
+}
+
+.section__intro {
+  max-width: var(--measure);
+  color: var(--ink-soft);
+  margin-bottom: 2.25rem;
+}
+.section__intro a { color: var(--down); }
+
+.sub {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  margin: 2.75rem 0 1.25rem;
+}
+
+/* ------------------------------------------------------------
+   Research topics. Deliberately not identical cards: each is a
+   diagram above a block of text, sitting on the page itself.
+   ------------------------------------------------------------ */
+.topics {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.25rem) clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 48rem) {
+  .topics { grid-template-columns: 1fr 1fr; }
+  .topic p { max-width: 46ch; }
+}
+
+.topic h3 {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  margin: 0.9rem 0 0.6rem;
+}
+
+.topic p {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.topic__dia {
+  width: 100%;
+  max-width: 13rem;
+  height: auto;
+  overflow: visible;
+}
+
+/* Diagram strokes carry the page's own colour logic */
+.dia-mid  { stroke: var(--midplane); stroke-width: 1;   stroke-dasharray: 3 3; }
+.dia-up   { stroke: var(--up);       stroke-width: 1.75; fill: none; stroke-linecap: round; }
+.dia-down { stroke: var(--down);     stroke-width: 1.75; fill: none; stroke-linecap: round; }
+.dia-halo { stroke: var(--ink-soft); stroke-width: 1; fill: none; stroke-dasharray: 2 4; }
+
+/* ------------------------------------------------------------
+   Publications. A list with hairlines, not a grid of cards.
+   ------------------------------------------------------------ */
+.pubs { border-top: 1px solid var(--midplane); }
+
+.pub {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0 1.25rem;
+  padding: 1.1rem 0 1.1rem 0;
+  border-bottom: 1px solid var(--midplane);
+}
+
+/* First-author papers carry a marker in the above-midplane colour */
+.pub--first {
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--up);
+  margin-left: calc(-0.9rem - 2px);   /* also account for the 2px border */
+}
+
+.pub__year {
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  padding-top: 0.2rem;
+}
+
+.pub__title {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.35;
+  margin-bottom: 0.3rem;
+  max-width: 54ch;
+}
+
+.pub__meta {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+.pub__meta b { font-weight: 600; color: var(--ink); }
+
+/* ------------------------------------------------------------
+   Record lists, used for teaching and outreach
+   ------------------------------------------------------------ */
+.record { margin: 0; }
+
+.record__row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 18rem) 1fr;
+  gap: 0.25rem 1.5rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--midplane);
+}
+.record__row:last-child { border-bottom: 1px solid var(--midplane); }
+
+.record dt { font-weight: 500; }
+.record dd { margin: 0; color: var(--ink-soft); font-size: 0.9375rem; }
+
+/* ------------------------------------------------------------
+   Software
+   ------------------------------------------------------------ */
+.software {
+  background: var(--wash);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 44rem;
+  margin-bottom: 2rem;
+  border-left: 2px solid var(--down);
+}
+
+.software__name {
+  font-family: var(--display);
+  font-size: 1.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.software p { color: var(--ink-soft); margin-bottom: 0.9rem; }
+
+.software__links { display: flex; gap: 1.5rem; margin: 0; font-size: 0.9375rem; }
+.software__links a { color: var(--down); }
+
+/* ------------------------------------------------------------
+   Contact
+   ------------------------------------------------------------ */
+.contact__lead { max-width: var(--measure); color: var(--ink-soft); }
+
+.contact__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.75rem;
+  margin: 1.5rem 0;
+  font-size: 1.0625rem;
+}
+.contact__list a { color: var(--down); text-underline-offset: 3px; }
+
+.contact__addr {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+.foot {
+  border-top: 1px solid var(--midplane);
+  padding: 1.75rem var(--gutter);
+  max-width: var(--page);
+  margin: 0 auto;
+}
+.foot p { margin: 0; font-size: 0.875rem; color: var(--ink-soft); }
+
+/* ------------------------------------------------------------
+   Narrow screens
+   ------------------------------------------------------------ */
+@media (max-width: 40rem) {
+  .pub { grid-template-columns: 1fr; gap: 0.3rem; }
+  .pub__year { padding-top: 0; }
+  .record__row { grid-template-columns: 1fr; }
+  .topbar { position: static; }
+  .topbar__nav { gap: 1rem; font-size: 0.85rem; }
+}
+
+/* ------------------------------------------------------------
+   Respect a reduced-motion preference. site.js also checks this
+   and draws the hero as a single still frame.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ============================================================
+   About page
+   ============================================================ */
+
+.about {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem) var(--gutter) clamp(2.5rem, 6vw, 4rem);
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+/* On wide screens the portrait sits in a narrow left column and the
+   text runs beside it. The hairline between the two is the midplane. */
+@media (min-width: 56rem) {
+  .about {
+    grid-template-columns: minmax(13rem, 18rem) 1fr;
+  }
+  .about__text {
+    border-left: 1px solid var(--midplane);
+    padding-left: clamp(2rem, 4vw, 3.5rem);
+  }
+}
+
+/* The panel shows through if portrait.jpg is not there yet, so a
+   missing photograph still looks deliberate rather than broken. */
+.portrait {
+  margin: 0;
+  max-width: 17rem;                /* keeps it from filling a phone screen */
+  border-top: 2px solid var(--up);
+}
+
+@media (min-width: 56rem) {
+  .portrait { max-width: none; }
+}
+
+.portrait img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--wash);         /* shows through if the file is absent */
+  color: var(--ink-soft);          /* colours the alt text if absent      */
+  font-size: 0.875rem;
+}
+
+.portrait figcaption {
+  padding: 0.6rem 0.1rem 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.about__text p {
+  max-width: 56ch;
+  color: var(--ink-soft);
+}
+
+.about__text .record { margin-top: 1.75rem; }
+/* The nav marks which page you are on */
+.topbar__nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--up);
+}
+
+/* ============================================================
+   Hobby sub-pages (climbing.html and friends)
+   ============================================================ */
+
+.backlink {
+  margin-bottom: 1.25rem;
+  font-size: 0.9375rem;
+}
+.backlink a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid var(--midplane);
+  padding-bottom: 2px;
+}
+.backlink a:hover { color: var(--ink); border-bottom-color: var(--up); }
+
+/* Portrait clips sit two or three across; landscape ones span wider. */
+.clips {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  align-items: start;
+}
+
+.clip { margin: 0; }
+
+.clip video {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;              /* stops a portrait clip dominating the row */
+  object-fit: contain;
+  display: block;
+  background: var(--ink);        /* no white flash before the poster loads */
+  border-top: 2px solid var(--up);
+}
+
+.clip figcaption {
+  padding-top: 0.6rem;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  max-width: 44ch;
+}
+
+/* Landscape footage: give it two columns where there is room. */
+@media (min-width: 42rem) {
+  .clip--wide { grid-column: span 2; }
+}

@@ -1,7 +1,451 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tigran Khachaturyants</title>
+<meta name="description" content="Tigran Khachaturyants, astrophysicist. Warps, bending waves and the vertical structure of galactic discs.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+<!-- ============================================================
+     Skip link, for keyboard users
+     ============================================================ -->
+<a class="skip" href="#main">Skip to content</a>
+
+
+<!-- ============================================================
+     Site navigation
+     ============================================================ -->
+<header class="topbar">
+  <a class="topbar__name" href="#top">Tigran Khachaturyants</a>
+  <nav class="topbar__nav" aria-label="Sections">
+    <a href="#main">Main</a>
+    <a href="#about">About</a>
+    <a href="#research">Research</a>
+    <a href="#papers">Papers</a>
+    <a href="#code">Code</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+
+<main id="main">
+
+<!-- ============================================================
+     Hero. The canvas draws an edge-on galactic disc with a warp:
+     points are coloured by their height above or below the midplane.
+     ============================================================ -->
+<section class="hero" id="top">
+
+  <div class="hero__figure">
+    <canvas id="warp" tabindex="0" role="img"
+            aria-label="A galactic disc seen edge-on, warped so that one side rides above the midplane and the other dips below it. Drag or use the arrow keys to turn it."></canvas>
+  </div>
+
+  <div class="hero__text">
+    <h1 class="hero__title">Why galactic discs<br><em>are not flat</em></h1>
+    <p class="hero__lede">
+      I am an astrophysicist at Shanghai Jiao Tong University. I work on warps,
+      bending waves and the vertical structure of galactic discs, using N-body
+      and hydrodynamical simulations alongside data from Gaia, APOGEE, GALAH
+      and LAMOST.
+    </p>
+    <p class="hero__links">
+      <a class="btn" href="#papers">Papers</a>
+      <a class="btn btn--quiet" href="cv.pdf">Curriculum vitae</a>
+      <a class="btn btn--quiet" href="mailto:astrotkh@outlook.com">Email</a>
+    </p>
+  </div>
+
+</section>
+
+
+<!-- Warped divider: the page's recurring structural device -->
+<div class="rule" role="presentation"></div>
+
+
+<!-- ============================================================
+     About
+     ============================================================ -->
+<section class="about" id="about">
+
+  <figure class="portrait">
+    <!-- Replace portrait.jpg with a photograph, keeping the filename. -->
+    <img src="me.webp" alt="Tigran Khachaturyants" width="900" height="1125">
+  </figure>
+
+  <div class="about__text">
+      <h2 class="section__title">About</h2>
+
+      <p>
+        I grew up between two languages and have spent my life between
+        countries: in the capital of Russia and then a small city in the north of England. Currently based in
+        Shanghai for good. Astrophysics has been my passion for more than half of my life and will likely stay that way.
+      </p>
+
+      <p>
+        Most days I run simulations of disc galaxies and then analyse them to find trends in stellar populations. Interested in
+        galactic dynamics and extragalactic astronomy with a major focus on galactic warps. 
+      </p>
+
+      <p>
+        My hobbies include, but are not limited to:
+        <a href="climbing.html">climbing and bouldering</a>, sewing, 3D printing
+        and modelling, singing, and analog photography.
+      </p>
+  </div>
+
+</section>
+
+
+<div class="rule" role="presentation"></div>
+
+
+<!-- ============================================================
+     Research
+     ============================================================ -->
+<section class="section" id="research">
+  <h2 class="section__title">Research</h2>
+  <p class="section__intro">
+    The Milky Way's disc is warped at its edges and carries waves throughout.
+    Those distortions are not noise around a flat equilibrium. They are a record
+    of how the Galaxy was built and what surrounds it. My work is about reading
+    that record: which mechanism produces which signature, and what each one
+    tells you.
+  </p>
+
+  <div class="topics">
+
+    <article class="topic">
+      <svg class="topic__dia" viewBox="0 0 120 54" aria-hidden="true">
+        <line class="dia-mid" x1="6" y1="27" x2="114" y2="27"/>
+        <path class="dia-down" d="M6 44 C 32 44, 44 27, 60 27"/>
+        <path class="dia-up"   d="M60 27 C 76 27, 88 10, 114 10"/>
+      </svg>
+      <h3>Warps and the thick disc</h3>
+      <p>
+        Stars that form inside a warped gas disc do not stay at the warp. They
+        are carried to large heights and pick up the kinematics we normally use
+        to identify thick-disc membership.
+      </p>
+    </article>
+
+    <article class="topic">
+      <svg class="topic__dia" viewBox="0 0 120 54" aria-hidden="true">
+        <line class="dia-mid" x1="6" y1="27" x2="114" y2="27"/>
+        <path class="dia-up"   d="M6 27 C 20 9, 34 9, 48 27"/>
+        <path class="dia-down" d="M48 27 C 62 45, 76 45, 90 27"/>
+        <path class="dia-up"   d="M90 27 C 99 16, 107 16, 114 22"/>
+      </svg>
+      <h3>Bending waves from gas accretion</h3>
+      <p>
+        Gas arriving along a direction misaligned with the disc, and arriving
+        irregularly rather than smoothly, excites bending waves that travel
+        through it. This gives a driver that works continuously, so a galaxy
+        does not need a recent merger to have a disturbed disc.
+      </p>
+    </article>
+
+    <article class="topic">
+      <svg class="topic__dia" viewBox="0 0 120 54" aria-hidden="true">
+        <line class="dia-mid" x1="6" y1="27" x2="114" y2="27"/>
+        <path class="dia-up"   d="M6 16 C 24 6, 42 24, 60 16 C 78 8, 96 24, 114 16"/>
+        <path class="dia-down" d="M6 38 C 24 48, 42 30, 60 38 C 78 46, 96 30, 114 38"/>
+      </svg>
+      <h3>Breathing waves and spirals</h3>
+      <p>
+        Breathing motions compress and expand the disc rather than displacing it.
+        Measuring their pattern speeds showed they match the spiral structure, so
+        they are driven from inside the disc. Bending waves trace an outside
+        influence; breathing waves trace an inside one. That division turns a
+        disturbed disc into a diagnostic.
+      </p>
+    </article>
+
+    <article class="topic">
+      <svg class="topic__dia" viewBox="0 0 120 54" aria-hidden="true">
+        <ellipse class="dia-halo" cx="60" cy="27" rx="52" ry="16"/>
+        <line class="dia-mid" x1="12" y1="27" x2="108" y2="27"/>
+        <path class="dia-down" d="M14 37 C 34 37, 46 27, 60 27"/>
+        <path class="dia-up"   d="M60 27 C 74 27, 86 17, 106 17"/>
+      </svg>
+      <h3>Warp precession and the halo</h3>
+      <p>
+        If the Galactic warp precesses, the rate at which it does would
+        constrain the shape of the dark matter halo driving it. Measuring that
+        rate is the hard part, and the answers so far are contested. A good deal
+        of my current work is on the method itself: what a precession
+        measurement is actually sensitive to, and how far a given one can be
+        trusted.
+      </p>
+    </article>
+  </div>
+</section>
+
+
+<div class="rule" role="presentation"></div>
+
+
+<!-- ============================================================
+     Publications. Written out by hand so the list is easy to edit:
+     add a new <li> at the top of the list for each new paper.
+     Add class="pub--first" when Tigran is first author.
+     ============================================================ -->
+<section class="section" id="papers">
+  <h2 class="section__title">Papers</h2>
+  <p class="section__intro">
+    Refereed publications, most recent first. A red marker indicates a
+    first-author paper. The
+    <a href="https://ui.adsabs.harvard.edu/search/q=author%3A%22Khachaturyants%2C%20Tigran%22&amp;sort=date%20desc">full
+    list is on ADS</a>.
+  </p>
+
+  <ol class="pubs">
+
+    <li class="pub">
+      <span class="pub__year">2026</span>
+      <div class="pub__body">
+        <h3 class="pub__title">The Low-&alpha; Splash Population in the Milky Way</h3>
+        <p class="pub__meta">
+          Borbolato, Amarante, Perottoni, <b>Khachaturyants</b> et al.
+          &middot; <i>The Astrophysical Journal</i> 1008, L23
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2026</span>
+      <div class="pub__body">
+        <h3 class="pub__title">GASTRO Library II. Chemical bimodalities in disc galaxies with GSE-like mergers and massive star-forming clumps</h3>
+        <p class="pub__meta">
+          Amarante, Laporte, Debattista, <b>Khachaturyants</b> et al.
+          &middot; <i>The Astrophysical Journal</i> 1004, 242
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2026</span>
+      <div class="pub__body">
+        <h3 class="pub__title">Phase spirals induced by the gas warp</h3>
+        <p class="pub__meta">
+          Wang, Brown, Debattista, <b>Khachaturyants</b>
+          &middot; <i>Astronomy &amp; Astrophysics</i> 710, A120
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2026</span>
+      <div class="pub__body">
+        <h3 class="pub__title">The edge of the Milky Way's star-forming disc: evidence from a U-shaped stellar age profile</h3>
+        <p class="pub__meta">
+          Fiteni, Anderson, Debattista, <b>Khachaturyants</b> et al.
+          &middot; <i>Astronomy &amp; Astrophysics</i> 708, A252
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2025</span>
+      <div class="pub__body">
+        <h3 class="pub__title">Azimuthal metallicity variations, spiral structure, and the failure of radial actions based on assuming axisymmetry</h3>
+        <p class="pub__meta">
+          Debattista, <b>Khachaturyants</b>, Amarante, Carr, Beraldo e Silva, Laporte
+          &middot; <i>Monthly Notices of the RAS</i> 537, 1620
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2024</span>
+      <div class="pub__body">
+        <h3 class="pub__title">A slightly oblate dark matter halo revealed by a retrograde precessing Galactic disk warp</h3>
+        <p class="pub__meta">
+          Huang, Feng, <b>Khachaturyants</b>, Zhang, Liu, Shen et al.
+          &middot; <i>Nature Astronomy</i> 8, 1294
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2023</span>
+      <div class="pub__body">
+        <h3 class="pub__title">Exploring the evolution of massive clumps in simulations that reproduce the observed Milky Way &alpha;-element abundance bimodality</h3>
+        <p class="pub__meta">
+          Garver, Nidever, Debattista, Beraldo e Silva, <b>Khachaturyants</b>
+          &middot; <i>The Astrophysical Journal</i> 953, 128
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2023</span>
+      <div class="pub__body">
+        <h3 class="pub__title">The imprint of clump formation at high redshift II. The chemistry of the bulge</h3>
+        <p class="pub__meta">
+          Debattista, Liddicott, Gonzalez, Beraldo e Silva, <b>Khachaturyants</b> et al.
+          &middot; <i>The Astrophysical Journal</i> 946, 118
+        </p>
+      </div>
+    </li>
+
+    <li class="pub pub--first">
+      <span class="pub__year">2022</span>
+      <div class="pub__body">
+        <h3 class="pub__title">The pattern speeds of vertical breathing waves</h3>
+        <p class="pub__meta">
+          <b>Khachaturyants</b>, Debattista, Ghosh, Beraldo e Silva, Daniel
+          &middot; <i>MNRAS Letters</i> 517, L55
+        </p>
+      </div>
+    </li>
+
+    <li class="pub pub--first">
+      <span class="pub__year">2022</span>
+      <div class="pub__body">
+        <h3 class="pub__title">Bending waves excited by irregular gas inflow along warps</h3>
+        <p class="pub__meta">
+          <b>Khachaturyants</b>, Beraldo e Silva, Debattista, Daniel
+          &middot; <i>Monthly Notices of the RAS</i> 512, 3500
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2022</span>
+      <div class="pub__body">
+        <h3 class="pub__title">Age dissection of the vertical breathing motions in Gaia DR2: evidence for spiral driving</h3>
+        <p class="pub__meta">
+          Ghosh, Debattista, <b>Khachaturyants</b>
+          &middot; <i>Monthly Notices of the RAS</i> 511, 784
+        </p>
+      </div>
+    </li>
+
+    <li class="pub pub--first">
+      <span class="pub__year">2021</span>
+      <div class="pub__body">
+        <h3 class="pub__title">How stars formed in warps settle into (and contaminate) thick discs</h3>
+        <p class="pub__meta">
+          <b>Khachaturyants</b>, Beraldo e Silva, Debattista
+          &middot; <i>Monthly Notices of the RAS</i> 508, 2350
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2020</span>
+      <div class="pub__body">
+        <h3 class="pub__title">Box/peanut-shaped bulges in action space</h3>
+        <p class="pub__meta">
+          Debattista, Liddicott, <b>Khachaturyants</b>, Beraldo e Silva
+          &middot; <i>Monthly Notices of the RAS</i> 498, 3334
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2020</span>
+      <div class="pub__body">
+        <h3 class="pub__title">Geometric properties of galactic discs with clumpy episodes</h3>
+        <p class="pub__meta">
+          Beraldo e Silva, Debattista, <b>Khachaturyants</b>, Nidever
+          &middot; <i>Monthly Notices of the RAS</i> 492, 4716
+        </p>
+      </div>
+    </li>
+
+    <li class="pub">
+      <span class="pub__year">2019</span>
+      <div class="pub__body">
+        <h3 class="pub__title">Drivers of disc tilting I. Correlations and possible drivers for Milky Way analogues</h3>
+        <p class="pub__meta">
+          Earp, Debattista, Macci&ograve;, Wang, Buck, <b>Khachaturyants</b>
+          &middot; <i>Monthly Notices of the RAS</i> 488, 5728
+        </p>
+      </div>
+    </li>
+
+  </ol>
+</section>
+
+
+<div class="rule" role="presentation"></div>
+
+
+
+<!-- ============================================================
+     Software
+     ============================================================ -->
+<section class="section" id="code">
+  <h2 class="section__title">Code</h2>
+
+  <div class="software">
+    <h3 class="software__name">POGONA</h3>
+    <p>
+      A Python library for analysing N-body and N-body+SPH simulations. It
+      handles large simulation outputs and extracts the kinematic and structural
+      diagnostics that each group would otherwise rebuild for itself. It is used
+      by research groups beyond my own.
+    </p>
+    <p class="software__links">
+      <a href="#">Repository</a>
+      <a href="#">Documentation</a>
+    </p>
+  </div>
+
+  <p class="section__intro">
+    I also maintain pipelines that cross-match Gaia astrometry against the
+    APOGEE, GALAH and LAMOST spectroscopic surveys, and methods for pulling weak
+    dynamical signals out of noisy, selection-limited samples.
+  </p>
+</section>
+
+
+<div class="rule" role="presentation"></div>
+
+
+<!-- ============================================================
+     Contact
+     ============================================================ -->
+<section class="section" id="contact">
+  <h2 class="section__title">Contact</h2>
+
+  <div class="contact">
+    <p class="contact__lead">
+      I am happy to hear from potential collaborators, from students looking for
+      a project, and from anyone who wants to talk about discs.
+    </p>
+    <ul class="contact__list">
+      <li><a href="mailto:astrotkh@sjtu.edu.cn">astrotkh@sjtu.edu.cn</a></li>
+      <li><a href="https://ui.adsabs.harvard.edu/search/q=author%3A%22Khachaturyants%2C%20Tigran%22&amp;sort=date%20desc">NASA ADS</a></li>
+      <li><a href="#">ORCID</a></li>
+      <li><a href="#">GitHub</a></li>
+    </ul>
+    <p class="contact__addr">
+      Department of Astronomy, School of Physics and Astronomy<br>
+      Shanghai Jiao Tong University<br>
+      800 Dongchuan Road, Minhang District, Shanghai 200240
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p>Tigran Khachaturyants &middot; Shanghai</p>
+</footer>
+
+<script src="site.js"></script>
 </body>
 </html>

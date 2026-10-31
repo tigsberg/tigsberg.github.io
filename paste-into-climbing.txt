@@ -1,0 +1,120 @@
+    <!-- from IMG_8495.MOV -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-01.jpg">
+        <source src="videos/clip-01.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-01.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from IMG_8524.MOV -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-02.jpg">
+        <source src="videos/clip-02.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-02.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20260303_221031.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-03.jpg">
+        <source src="videos/clip-03.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-03.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20260708_110150.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-04.jpg">
+        <source src="videos/clip-04.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-04.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20260714_202635.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-05.jpg">
+        <source src="videos/clip-05.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-05.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20261006_191545.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-06.jpg">
+        <source src="videos/clip-06.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-06.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20261006_193437.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-07.jpg">
+        <source src="videos/clip-07.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-07.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20261013_205348.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-08.jpg">
+        <source src="videos/clip-08.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-08.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20261013_210507.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-09.jpg">
+        <source src="videos/clip-09.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-09.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20261021_153729.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-10.jpg">
+        <source src="videos/clip-10.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-10.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20261021_153841.mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-11.jpg">
+        <source src="videos/clip-11.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-11.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
+    <!-- from VID_20261021_153841(1).mp4 -->
+    <figure class="clip">
+      <video controls preload="metadata" playsinline poster="videos/clip-12.jpg">
+        <source src="videos/clip-12.mp4" type="video/mp4">
+        Your browser cannot play this video.
+        <a href="videos/clip-12.mp4">Download it instead.</a>
+      </video>
+      <figcaption>Caption goes here.</figcaption>
+    </figure>
+
