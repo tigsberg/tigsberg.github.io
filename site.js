@@ -43,7 +43,7 @@
   var COLOR_MP = css.getPropertyValue("--midplane").trim() || "#b9c2cd";
 
   /* ---- Model parameters ------------------------------------ */
-  var N_STARS = 1300;    // point count
+  var N_STARS = 20000;    // point count
   var R_DISC  = 1.0;     // disc edge, in model units
   var R_SCALE = 0.52;    // exponential scale length
   var R_WARP  = 0.30;    // warp starts outside this radius
